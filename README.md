@@ -44,15 +44,46 @@ The app icons in `public/icons/` and `public/apple-touch-icon.png` are generated
 (not committed) by `scripts/generate-icons.mjs`, which runs automatically before
 `dev` and `build`. Run `npm run icons` to regenerate them on demand.
 
-## Deploy (free options)
+## Make it live on GitHub Pages (recommended, free)
 
-The build output in `dist/` is a static site — host it anywhere:
+This repo includes a workflow (`.github/workflows/deploy.yml`) that builds and
+publishes the app automatically. To go live:
 
-- **Netlify** — drag-and-drop the `dist/` folder at app.netlify.com, or connect this
-  repo and set build command `npm run build`, publish directory `dist`.
+1. **Get the code onto GitHub.** From the unzipped project folder on your computer:
+
+   ```bash
+   git init
+   git add -A
+   git commit -m "Initial commit: Abigail Cookies recipe PWA"
+   git branch -M main
+   git remote add origin https://github.com/<your-username>/abigail-cookies.git
+   git push -u origin main
+   ```
+
+2. **Turn on Pages.** In the repo on GitHub: **Settings → Pages → Build and
+   deployment → Source → "GitHub Actions"**.
+
+3. **Done.** The workflow runs on that push (watch it under the **Actions** tab) and
+   publishes your site at:
+
+   ```
+   https://<your-username>.github.io/abigail-cookies/
+   ```
+
+   Open that URL in Safari on your iPhone → **Share → Add to Home Screen**.
+
+From then on, **every push to `main` redeploys automatically** — so updating recipes
+is: add the recipe → commit → push → the live site (and all installed devices) update
+on their own. The app uses relative asset paths, so it works correctly from the
+`/abigail-cookies/` subpath.
+
+### Other free hosts
+
+The `dist/` output is a plain static site, so you can also use:
+
+- **Netlify** — drag-and-drop the `dist/` folder at app.netlify.com, or connect the
+  repo with build command `npm run build` and publish directory `dist`.
 - **Vercel** — import the repo; it auto-detects Vite.
-- **GitHub Pages** — push `dist/` to a `gh-pages` branch (the app uses relative paths,
-  so it works from a subpath).
 
 ## Adding a recipe
 
