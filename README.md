@@ -47,27 +47,36 @@ The app icons in `public/icons/` and `public/apple-touch-icon.png` are generated
 ## Make it live on GitHub Pages (recommended, free)
 
 This repo includes a workflow (`.github/workflows/deploy.yml`) that builds and
-publishes the app automatically. To go live:
+publishes the app automatically. **Important:** GitHub must build the project — do not
+upload only the loose source files, or the page will be blank (the browser can't run
+the raw `src/main.tsx`). The whole project, including the `.github` folder, must be in
+the repo and Pages must be set to "GitHub Actions".
+
+The most reliable way to get everything in (folders + the hidden `.github` folder) is
+**GitHub Desktop** or git:
 
 1. **Get the code onto GitHub.** From the unzipped project folder on your computer:
 
    ```bash
    git init
    git add -A
-   git commit -m "Initial commit: Abigail Cookies recipe PWA"
+   git commit -m "Abigail Cookies recipe PWA"
    git branch -M main
-   git remote add origin https://github.com/<your-username>/abigail-cookies.git
+   git remote add origin https://github.com/avilaykoun/madebyabi.git
    git push -u origin main
    ```
+
+   (Or in **GitHub Desktop**: clone the repo, copy all project files in — enable
+   "show hidden files" so `.github` is included — then Commit and Push.)
 
 2. **Turn on Pages.** In the repo on GitHub: **Settings → Pages → Build and
    deployment → Source → "GitHub Actions"**.
 
-3. **Done.** The workflow runs on that push (watch it under the **Actions** tab) and
-   publishes your site at:
+3. **Done.** The workflow runs (watch it under the **Actions** tab — look for
+   "Deploy to GitHub Pages") and publishes your site at:
 
    ```
-   https://<your-username>.github.io/abigail-cookies/
+   https://avilaykoun.github.io/madebyabi/
    ```
 
    Open that URL in Safari on your iPhone → **Share → Add to Home Screen**.
@@ -75,7 +84,7 @@ publishes the app automatically. To go live:
 From then on, **every push to `main` redeploys automatically** — so updating recipes
 is: add the recipe → commit → push → the live site (and all installed devices) update
 on their own. The app uses relative asset paths, so it works correctly from the
-`/abigail-cookies/` subpath.
+`/madebyabi/` subpath.
 
 ### Other free hosts
 
