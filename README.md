@@ -31,7 +31,7 @@ and works **offline** in the kitchen. No App Store, no Mac required.
 
 ## Develop locally
 
-Requires Node 18+.
+Requires Node 22+ (the recipe validator uses Node's built-in TypeScript support).
 
 ```bash
 npm install      # install dependencies
@@ -54,10 +54,32 @@ The build output in `dist/` is a static site — host it anywhere:
 - **GitHub Pages** — push `dist/` to a `gh-pages` branch (the app uses relative paths,
   so it works from a subpath).
 
-## Add or edit recipes
+## Adding a recipe
 
-All recipes live in **`src/data/recipes.ts`**. Copy an existing entry and edit the
-fields:
+Recipes are managed in code and shipped with the app, so the deployed site is the
+single source of truth. **Add a recipe once, redeploy, and every device and helper
+gets it** the next time they open the app — no per-device updates, accounts, or
+backend.
+
+### Workflow
+
+1. **Owner:** open [`RECIPE_TEMPLATE.md`](./RECIPE_TEMPLATE.md), copy it, fill in the
+   blanks (no coding required), and send it to your developer.
+2. **Developer:** add a new entry to the `recipes` array in **`src/data/recipes.ts`**
+   (copy an existing entry as a starting point — see the shape below). Pick a unique
+   `id`; the category chips on the home screen are derived automatically from the
+   `category` field via `categories` in the same file, so a brand-new category just
+   works.
+3. **Developer:** run `npm run build`. This first runs `npm run validate`, which
+   checks the recipe data and **fails the build with a clear message** if anything is
+   off (duplicate id, missing field, non-positive number) — so a typo can never break
+   the live app for everyone.
+4. **Developer:** redeploy the `dist/` folder (same as the initial deploy).
+5. **Everyone:** reopen the app. Installed home-screen apps auto-update to the latest
+   version on open (the app also re-checks hourly while open), so the new recipe
+   appears on all devices.
+
+### Recipe shape (`src/data/recipes.ts`)
 
 ```ts
 {
@@ -83,7 +105,8 @@ fields:
 ```
 
 `quantity` is always a number so batch scaling can recompute it. Use an empty `unit`
-(`''`) for count-based items like eggs.
+(`''`) for count-based items like eggs. Run `npm run validate` any time to check the
+data without a full build.
 
 ## Tech
 
@@ -93,5 +116,6 @@ preferences are saved in the browser.
 
 ## Ideas for later
 
-In-app recipe editing, photos, shopping-list generation, and a per-batch cost &
-pricing calculator for the business side.
+In-app recipe editing, photos, shopping-list generation, a per-batch cost & pricing
+calculator for the business side, and cloud sync if you ever want recipes editable
+live across multiple accounts.
