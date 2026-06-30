@@ -257,6 +257,23 @@ button {
   margin-top: 2px;
 }
 
+.allergen-line {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  background: #fdeccf;
+  border: 1px solid #f1dfc2;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  color: #7a5a1e;
+}
+
+.allergen-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+}
+
 /* ---------- Scale control ---------- */
 .scale-control {
   background: var(--surface);

@@ -12,9 +12,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        name: 'Abigail Cookies',
-        short_name: 'Cookies',
-        description: 'Follow cookie recipes hands-free while you bake.',
+        name: 'Made by Abi',
+        short_name: 'Made by Abi',
+        description: 'Brown butter cookie recipes to follow hands-free while you bake.',
         theme_color: '#7b4a2d',
         background_color: '#fff8f0',
         display: 'standalone',

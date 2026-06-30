@@ -32,7 +32,11 @@ recipes.forEach((r, i) => {
   req(isPos(r.yield), 'yield must be a number > 0')
   req(isPos(r.prepMinutes), 'prepMinutes must be a number > 0')
   req(isPos(r.bakeMinutes), 'bakeMinutes must be a number > 0')
-  req(isPos(r.ovenTempF), 'ovenTempF must be a number > 0')
+  req(isPos(r.ovenTempC), 'ovenTempC must be a number > 0')
+  req(
+    Array.isArray(r.contains) && r.contains.length > 0,
+    'contains must list at least one allergen (use ["None"] if truly none)',
+  )
 
   req(
     Array.isArray(r.ingredients) && r.ingredients.length > 0,

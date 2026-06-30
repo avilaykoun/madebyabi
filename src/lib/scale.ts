@@ -1,38 +1,52 @@
 import type { Ingredient } from '../types'
 
-/** Common kitchen fractions, in eighths, for friendly display. */
-const FRACTIONS: Array<[number, string]> = [
-  [0, ''],
-  [1, '⅛'], // 1/8
-  [2, '¼'], // 1/4
-  [3, '⅜'], // 3/8
-  [4, '½'], // 1/2
-  [5, '⅝'], // 5/8
-  [6, '¾'], // 3/4
-  [7, '⅞'], // 7/8
-]
+/** Unicode fractions for the small spoon/egg amounts that aren't whole. */
+const FRACTION_SYMBOLS: Record<string, string> = {
+  '1/4': '¼',
+  '1/2': '½',
+  '3/4': '¾',
+  '1/3': '⅓',
+  '2/3': '⅔',
+}
+
+/** Drop a trailing ".0" so 3.0 shows as "3" but 2.5 stays "2.5". */
+function trimDecimal(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(1)
+}
+
+function gcd(a: number, b: number): number {
+  return b === 0 ? a : gcd(b, a % b)
+}
+
+/** Build "whole + fraction" rounded to the nearest 1/denominator (denom 2 or 4). */
+function toFraction(value: number, denom: number): string {
+  const whole = Math.floor(value)
+  const n = Math.round((value - whole) * denom)
+  if (n === 0) return String(whole)
+  if (n === denom) return String(whole + 1)
+  const divisor = gcd(n, denom)
+  const key = `${n / divisor}/${denom / divisor}`
+  const symbol = FRACTION_SYMBOLS[key] ?? `${n}/${denom}`
+  return whole > 0 ? `${whole} ${symbol}` : symbol
+}
 
 /**
- * Format a quantity the way a baker would write it: whole numbers plus the
- * nearest eighth as a unicode fraction (e.g. 1.75 -> "1¾", 0.5 -> "½").
- * Larger amounts (>= 10) are rounded to one decimal to stay readable.
+ * Format a scaled quantity for display, choosing a sensible style per unit:
+ * - grams / millilitres: whole numbers (one decimal under 10) — metric weights.
+ * - tsp / tbsp: nearest quarter as a friendly fraction (e.g. "1 ½").
+ * - count items (eggs, unit ""): nearest half.
  */
-export function formatQuantity(value: number): string {
+export function formatQuantity(value: number, unit = ''): string {
   if (value <= 0) return ''
-  if (value >= 10) {
-    return Number.isInteger(value) ? String(value) : value.toFixed(1)
+  const u = unit.trim().toLowerCase()
+
+  if (u === 'g' || u === 'ml') {
+    return value < 10 ? trimDecimal(value) : String(Math.round(value))
   }
+  if (u === 'tsp' || u === 'tbsp') return toFraction(value, 4)
+  if (u === '') return toFraction(value, 2)
 
-  const whole = Math.floor(value)
-  const remainder = value - whole
-  // Round the remainder to the nearest eighth.
-  const eighths = Math.round(remainder * 8)
-
-  if (eighths === 0) return String(whole)
-  if (eighths === 8) return String(whole + 1)
-
-  const fraction = FRACTIONS[eighths][1]
-  return whole > 0 ? `${whole}${' '}${fraction}` : fraction
+  return value < 10 ? trimDecimal(value) : String(Math.round(value))
 }
 
 /** Scale a single ingredient's quantity by a factor. */
