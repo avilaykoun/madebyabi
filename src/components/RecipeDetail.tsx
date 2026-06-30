@@ -46,14 +46,20 @@ export default function RecipeDetail() {
             <span className="meta-key">Bake</span>
           </div>
           <div className="meta-item">
-            <span className="meta-value">{recipe.ovenTempF}°F</span>
-            <span className="meta-key">Oven</span>
+            <span className="meta-value">{recipe.ovenTempC}°C</span>
+            <span className="meta-key">Oven ({recipe.ovenTempC - 20}° fan)</span>
           </div>
           <div className="meta-item">
             <span className="meta-value">{recipe.difficulty}</span>
             <span className="meta-key">Level</span>
           </div>
         </div>
+        {recipe.contains && recipe.contains.length > 0 ? (
+          <p className="allergen-line">
+            <span className="allergen-label">Contains:</span>{' '}
+            {recipe.contains.join(', ')}
+          </p>
+        ) : null}
       </header>
 
       <ScaleControl
@@ -67,7 +73,7 @@ export default function RecipeDetail() {
         <ul className="ingredient-list">
           {recipe.ingredients.map((ing, i) => {
             const amount = scaleIngredient(ing, factor)
-            const qty = formatQuantity(amount)
+            const qty = formatQuantity(amount, ing.unit)
             return (
               <li key={i} className="ingredient-row">
                 <span className="ingredient-amount">
