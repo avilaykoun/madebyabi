@@ -31,7 +31,7 @@ and works **offline** in the kitchen. No App Store, no Mac required.
 
 ## Develop locally
 
-Requires Node 18+.
+Requires Node 22+ (the recipe validator uses Node's built-in TypeScript support).
 
 ```bash
 npm install      # install dependencies
@@ -44,20 +44,82 @@ The app icons in `public/icons/` and `public/apple-touch-icon.png` are generated
 (not committed) by `scripts/generate-icons.mjs`, which runs automatically before
 `dev` and `build`. Run `npm run icons` to regenerate them on demand.
 
-## Deploy (free options)
+## Make it live on GitHub Pages (recommended, free)
 
-The build output in `dist/` is a static site — host it anywhere:
+This repo includes a workflow (`.github/workflows/deploy.yml`) that builds and
+publishes the app automatically. **Important:** GitHub must build the project — do not
+upload only the loose source files, or the page will be blank (the browser can't run
+the raw `src/main.tsx`). The whole project, including the `.github` folder, must be in
+the repo and Pages must be set to "GitHub Actions".
 
-- **Netlify** — drag-and-drop the `dist/` folder at app.netlify.com, or connect this
-  repo and set build command `npm run build`, publish directory `dist`.
+The most reliable way to get everything in (folders + the hidden `.github` folder) is
+**GitHub Desktop** or git:
+
+1. **Get the code onto GitHub.** From the unzipped project folder on your computer:
+
+   ```bash
+   git init
+   git add -A
+   git commit -m "Abigail Cookies recipe PWA"
+   git branch -M main
+   git remote add origin https://github.com/avilaykoun/madebyabi.git
+   git push -u origin main
+   ```
+
+   (Or in **GitHub Desktop**: clone the repo, copy all project files in — enable
+   "show hidden files" so `.github` is included — then Commit and Push.)
+
+2. **Turn on Pages.** In the repo on GitHub: **Settings → Pages → Build and
+   deployment → Source → "GitHub Actions"**.
+
+3. **Done.** The workflow runs (watch it under the **Actions** tab — look for
+   "Deploy to GitHub Pages") and publishes your site at:
+
+   ```
+   https://avilaykoun.github.io/madebyabi/
+   ```
+
+   Open that URL in Safari on your iPhone → **Share → Add to Home Screen**.
+
+From then on, **every push to `main` redeploys automatically** — so updating recipes
+is: add the recipe → commit → push → the live site (and all installed devices) update
+on their own. The app uses relative asset paths, so it works correctly from the
+`/madebyabi/` subpath.
+
+### Other free hosts
+
+The `dist/` output is a plain static site, so you can also use:
+
+- **Netlify** — drag-and-drop the `dist/` folder at app.netlify.com, or connect the
+  repo with build command `npm run build` and publish directory `dist`.
 - **Vercel** — import the repo; it auto-detects Vite.
-- **GitHub Pages** — push `dist/` to a `gh-pages` branch (the app uses relative paths,
-  so it works from a subpath).
 
-## Add or edit recipes
+## Adding a recipe
 
-All recipes live in **`src/data/recipes.ts`**. Copy an existing entry and edit the
-fields:
+Recipes are managed in code and shipped with the app, so the deployed site is the
+single source of truth. **Add a recipe once, redeploy, and every device and helper
+gets it** the next time they open the app — no per-device updates, accounts, or
+backend.
+
+### Workflow
+
+1. **Owner:** open [`RECIPE_TEMPLATE.md`](./RECIPE_TEMPLATE.md), copy it, fill in the
+   blanks (no coding required), and send it to your developer.
+2. **Developer:** add a new entry to the `recipes` array in **`src/data/recipes.ts`**
+   (copy an existing entry as a starting point — see the shape below). Pick a unique
+   `id`; the category chips on the home screen are derived automatically from the
+   `category` field via `categories` in the same file, so a brand-new category just
+   works.
+3. **Developer:** run `npm run build`. This first runs `npm run validate`, which
+   checks the recipe data and **fails the build with a clear message** if anything is
+   off (duplicate id, missing field, non-positive number) — so a typo can never break
+   the live app for everyone.
+4. **Developer:** redeploy the `dist/` folder (same as the initial deploy).
+5. **Everyone:** reopen the app. Installed home-screen apps auto-update to the latest
+   version on open (the app also re-checks hourly while open), so the new recipe
+   appears on all devices.
+
+### Recipe shape (`src/data/recipes.ts`)
 
 ```ts
 {
@@ -83,7 +145,8 @@ fields:
 ```
 
 `quantity` is always a number so batch scaling can recompute it. Use an empty `unit`
-(`''`) for count-based items like eggs.
+(`''`) for count-based items like eggs. Run `npm run validate` any time to check the
+data without a full build.
 
 ## Tech
 
@@ -93,5 +156,6 @@ preferences are saved in the browser.
 
 ## Ideas for later
 
-In-app recipe editing, photos, shopping-list generation, and a per-batch cost &
-pricing calculator for the business side.
+In-app recipe editing, photos, shopping-list generation, a per-batch cost & pricing
+calculator for the business side, and cloud sync if you ever want recipes editable
+live across multiple accounts.

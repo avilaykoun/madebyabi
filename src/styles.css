@@ -1,0 +1,572 @@
+:root {
+  --bg: #fff8f0;
+  --surface: #ffffff;
+  --ink: #3a2a1c;
+  --ink-soft: #7a6a5b;
+  --brand: #7b4a2d;
+  --brand-light: #a9714c;
+  --accent: #e8a13a;
+  --line: #ece0d3;
+  --shadow: 0 2px 10px rgba(123, 74, 45, 0.08);
+  --radius: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Layout ---------- */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px
+    calc(32px + env(safe-area-inset-bottom));
+}
+
+.app-header {
+  text-align: center;
+  padding: 12px 0 8px;
+}
+
+.app-title {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* ---------- Search ---------- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 10px 16px;
+  margin: 12px 0;
+  box-shadow: var(--shadow);
+}
+
+.search-icon {
+  opacity: 0.6;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  width: 100%;
+  color: var(--ink);
+}
+
+/* ---------- Chips ---------- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+}
+
+.chip-active {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+/* ---------- Recipe grid ---------- */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 600px) {
+  .recipe-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.recipe-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.12s ease;
+}
+
+.recipe-card:active {
+  transform: scale(0.99);
+}
+
+.recipe-card-body {
+  padding: 16px;
+}
+
+.recipe-card-category {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--brand-light);
+  font-weight: 700;
+}
+
+.recipe-card-title {
+  font-size: 1.2rem;
+  margin: 6px 0 6px;
+  color: var(--ink);
+}
+
+.recipe-card-desc {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.recipe-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 40px 0;
+}
+
+/* ---------- Detail ---------- */
+.detail-topbar,
+.step-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 12px;
+}
+
+.back-link,
+.text-link {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.link-button {
+  border: none;
+  background: none;
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.detail-header {
+  margin-bottom: 8px;
+}
+
+.detail-title {
+  font-size: 1.7rem;
+  margin: 6px 0;
+  color: var(--brand);
+}
+
+.detail-desc {
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.detail-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.meta-value {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.meta-key {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* ---------- Scale control ---------- */
+.scale-control {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: var(--shadow);
+}
+
+.scale-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.scale-label {
+  font-weight: 700;
+}
+
+.scale-yield {
+  color: var(--brand-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.scale-control .chip-row {
+  margin: 0 0 12px;
+}
+
+.scale-target {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.scale-target-input {
+  display: block;
+  margin-top: 6px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+/* ---------- Sections ---------- */
+.section {
+  margin: 22px 0;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  color: var(--brand);
+  margin: 0 0 12px;
+}
+
+.ingredient-list,
+.tips-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ingredient-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.ingredient-amount {
+  flex: 0 0 90px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.ingredient-name {
+  color: var(--ink);
+}
+
+.ingredient-note {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.step-preview-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+}
+
+.step-preview-row {
+  padding: 6px 0;
+  line-height: 1.5;
+}
+
+.step-timer-badge {
+  display: inline-block;
+  margin-left: 8px;
+  background: #fff3df;
+  color: #9a6b16;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tip-row {
+  padding: 8px 0;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---------- Buttons ---------- */
+.primary-button {
+  width: 100%;
+  border: none;
+  background: var(--brand);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.primary-button:active {
+  background: var(--brand-light);
+}
+
+.bake-button {
+  margin-top: 12px;
+}
+
+/* ---------- Step mode ---------- */
+.step-mode {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: max(12px, env(safe-area-inset-top)) 16px
+    calc(16px + env(safe-area-inset-bottom));
+}
+
+.step-counter {
+  font-weight: 700;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.step-progress {
+  height: 6px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.step-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.step-card-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-card {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px 22px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.step-card-done {
+  border-color: var(--accent);
+  background: #fffdf6;
+}
+
+.step-instruction {
+  font-size: 1.45rem;
+  line-height: 1.45;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.step-check {
+  margin-top: 18px;
+  border: 2px solid var(--brand);
+  background: transparent;
+  color: var(--brand);
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 1rem;
+}
+
+.step-check-on {
+  background: var(--brand);
+  color: #fff;
+}
+
+.step-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.nav-button {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+  padding: 14px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.nav-button:disabled {
+  opacity: 0.4;
+}
+
+.nav-button-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+.step-done-count {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+/* ---------- Timer ---------- */
+.timer {
+  margin: 18px 0 6px;
+  padding: 16px;
+  background: #fff7eb;
+  border: 1px solid #f1dfc2;
+  border-radius: var(--radius);
+}
+
+.timer-done {
+  background: #fdeccf;
+  border-color: var(--accent);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(232, 161, 58, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(232, 161, 58, 0);
+  }
+}
+
+.timer-clock {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.timer-btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+}
+
+.timer-btn-primary {
+  background: var(--accent);
+  color: #4a3206;
+  border-color: var(--accent);
+}
+
+.timer-message {
+  text-align: center;
+  font-weight: 700;
+  color: #9a6b16;
+  margin: 10px 0 0;
+}
