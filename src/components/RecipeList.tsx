@@ -24,8 +24,8 @@ export default function RecipeList() {
   return (
     <div className="page">
       <header className="app-header">
-        <h1 className="app-title">Abigail Cookies</h1>
-        <p className="app-subtitle">Your cookie business, one batch at a time</p>
+        <h1 className="app-title">Made by Abi</h1>
+        <p className="app-subtitle">Brown butter cookies, baked fresh in Sydney</p>
       </header>
 
       <SearchBar value={query} onChange={setQuery} />

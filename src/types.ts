@@ -24,9 +24,12 @@ export interface Recipe {
   yield: number
   prepMinutes: number
   bakeMinutes: number
-  ovenTempF: number
+  /** Conventional oven temperature in °C. Fan-forced is shown as 20°C lower. */
+  ovenTempC: number
   difficulty: Difficulty
   ingredients: Ingredient[]
   steps: Step[]
+  /** Allergens present, e.g. ['Gluten', 'Dairy', 'Egg']. Shown as a "Contains" line. */
+  contains: string[]
   tips?: string[]
 }
