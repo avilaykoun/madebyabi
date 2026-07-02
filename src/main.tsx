@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom'
 import { registerSW } from 'virtual:pwa-register'
 import App from './App'
 import './styles.css'
+import './brand.css'
 
 // With registerType: 'autoUpdate', this fetches the latest service worker and
 // reloads once it takes control — so every installed device picks up new
