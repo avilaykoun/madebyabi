@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.svg', 'apple-touch-icon.jpg'],
       manifest: {
         name: 'Made by Abi',
         short_name: 'Made by Abi',
@@ -20,18 +20,18 @@ export default defineConfig({
         display: 'standalone',
         orientation: 'portrait',
         icons: [
-          { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'icons/icon-192.jpg', sizes: '192x192', type: 'image/jpeg' },
+          { src: 'icons/icon-512.jpg', sizes: '512x512', type: 'image/jpeg' },
           {
-            src: 'icons/icon-512-maskable.png',
+            src: 'icons/icon-512-maskable.jpg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/jpeg',
             purpose: 'maskable',
           },
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,jpg,woff2}'],
       },
     }),
   ],

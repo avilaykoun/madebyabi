@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { categories, recipes } from '../data/recipes'
+import { avatarDataUri } from '../assets/logo'
 import RecipeCard from './RecipeCard'
 import SearchBar from './SearchBar'
 import CategoryChips from './CategoryChips'
@@ -24,6 +25,7 @@ export default function RecipeList() {
   return (
     <div className="page">
       <header className="app-header">
+        <img className="app-logo" src={avatarDataUri} alt="Made by Abi" />
         <h1 className="app-title">Made by Abi</h1>
         <p className="app-subtitle">Brown butter cookies, baked fresh in Sydney</p>
       </header>

@@ -1,0 +1,28 @@
+/* Brand elements added alongside the main stylesheet: the portrait logo in the
+   header and the small avatar accent on each recipe card. */
+
+.app-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 8px;
+  border: 3px solid var(--brand);
+  box-shadow: var(--shadow);
+}
+
+.recipe-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.card-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}

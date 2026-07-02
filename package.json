@@ -5,7 +5,7 @@
   "description": "Abigail Cookies — a recipe PWA for following cookie recipes on your phone",
   "type": "module",
   "scripts": {
-    "icons": "node scripts/generate-icons.mjs",
+    "icons": "node --experimental-strip-types scripts/generate-icons.mjs",
     "validate": "node --experimental-strip-types scripts/validate-recipes.mjs",
     "predev": "npm run validate && npm run icons",
     "dev": "vite",
